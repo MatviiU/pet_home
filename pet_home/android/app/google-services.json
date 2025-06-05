@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846917741457",
+    "project_id": "pet-home-89325",
+    "storage_bucket": "pet-home-89325.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846917741457:android:632f403bca2e497b688830",
+        "android_client_info": {
+          "package_name": "com.example.pet_home"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwgaNsZmxL_7JK8pBhx7X9lQz8sGHzLAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
