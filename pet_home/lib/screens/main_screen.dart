@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_home/widgets/main_screen_widgets/pet_card.dart';
+import 'package:pet_home/widgets/bottom_navigation_bar.dart';
+import 'package:pet_home/widgets/main_screen_widgets/empty_favorite_pets_view.dart';
+import 'package:pet_home/widgets/main_screen_widgets/main_grid_view.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -44,46 +46,11 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: TabBarView(
           children: [
-            _buildPetGrid(),
-            buildEmptyMyPetsView(),
+            MainGridView(),
+            EmptyFavoritePetsView(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPetGrid(){
-    return GridView.builder(
-      padding: const EdgeInsets.all(16.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        childAspectRatio: 0.57,
-      ),
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return PetCard(
-          name: 'Name',
-          type: 'Type',
-          onTap: () {},
-        );
-      },
-    );
-  }
-
-  Widget buildEmptyMyPetsView(){
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          "You don't have an animal",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.black.withValues(alpha: 0.7),
-          ),
-          textAlign: TextAlign.center,
-        ),
+        bottomNavigationBar: BottomNavBar(),
       ),
     );
   }
