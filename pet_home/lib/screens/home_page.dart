@@ -1,17 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_home/widgets/bottom_navigation_bar.dart';
 import 'package:pet_home/widgets/main_screen_widgets/empty_favorite_pets_view.dart';
 import 'package:pet_home/widgets/main_screen_widgets/main_grid_view.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +37,7 @@ class _MainScreenState extends State<MainScreen> {
             labelStyle: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
-        body: TabBarView(
-          children: [
-            MainGridView(),
-            EmptyFavoritePetsView(),
-          ],
-        ),
-        bottomNavigationBar: BottomNavBar(),
+        body: TabBarView(children: [MainGridView(), EmptyFavoritePetsView()]),
       ),
     );
   }

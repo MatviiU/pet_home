@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pet_home/styles/app_colors.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({
+    super.key,
+    required this.onItemTapped,
+    required this.currentIndex,
+  });
 
-  @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
-}
-
-class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
+  final ValueChanged<int> onItemTapped;
+  final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -17,29 +17,36 @@ class _BottomNavBarState extends State<BottomNavBar> {
       borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       child: BottomNavigationBar(
         backgroundColor: AppColors.darkGreen,
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
+        selectedItemColor: AppColors.lightGreen,
+        currentIndex: currentIndex,
+        onTap: onItemTapped,
         items: [
           BottomNavigationBarItem(
-            icon: Image.asset('assets/icons/house_icon.png', width: 40, height: 40),
+            icon: Image.asset(
+              'assets/icons/house_icon.png',
+              width: 40,
+              height: 40,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('assets/icons/heart_icon.png', width: 40, height: 40),
+            icon: Image.asset(
+              'assets/icons/heart_icon.png',
+              width: 40,
+              height: 40,
+            ),
             label: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('assets/icons/person_icon.png', width: 40, height: 40),
+            icon: Image.asset(
+              'assets/icons/person_icon.png',
+              width: 40,
+              height: 40,
+            ),
             label: 'Profile',
           ),
         ],
       ),
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 }
