@@ -1,16 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_home/screens/sign_in_up.dart';
-import 'package:pet_home/styles/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pet_home/core/router/app_router.dart';
+import 'package:pet_home/core/theme/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:pet_home/widgets/main_screen_widgets/main_layout.dart';
-import 'package:pet_home/widgets/splash.dart';
+import 'package:pet_home/features/app/bloc/app_bloc.dart';
+import 'package:pet_home/features/auth/data/repositories/auth_repository.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(const App());
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider<AppBloc>(
+        create:
+            (context) =>
+                AppBloc(authRepository: context.read<AuthRepository>()),
+        child: MyApp(),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -18,23 +35,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pet home',
-      theme: AppTheme.theme,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SplashScreen();
-          }
-          if (snapshot.hasData) {
-            return MainLayout();
-          } else {
-            return SignInUpScreen();
-          }
-        },
+    final appRouter = AppRouter(appBloc: context.read<AppBloc>());
+    return BlocListener<AppBloc, AppState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        switch (state.status) {
+          case AppStatus.authenticated:
+            appRouter.replace(const MainRoute());
+            break;
+          case AppStatus.unauthenticated:
+            appRouter.replace(const SignInRoute());
+            break;
+          case AppStatus.unknown:
+            break;
+        }
+      },
+      child: MaterialApp.router(
+        title: 'Pet home',
+        theme: AppTheme.theme,
+        routerConfig: appRouter.config(),
+        debugShowCheckedModeBanner: false,
       ),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
