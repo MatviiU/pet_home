@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_home/core/theme/app_colors.dart';
 import 'package:pet_home/features/auth/data/models/user.dart';
